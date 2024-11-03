@@ -24,8 +24,8 @@ jobs:
 
             - name: Build Docker Image
               run: |
-                docker buildx build --load -t brian427/github-actions-test .
+                docker buildx build --load -t brian247/github-actions-test .
             
             - name: Push Docker Image
               run: |
-                docker push brian427/github-actions-test:latest
+                docker push brian247/github-actions-test:latest
