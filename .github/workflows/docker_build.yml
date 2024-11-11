@@ -13,5 +13,12 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
+            - name: Set up X11 environment
+              run: |
+                sudo apt-get update
+                sudo apt-get install -y xauth x11-xserver-utils xvfb
+                export DISPLAY=:99
+                Xvfb :99 -screen 0 1024x768x16 &
+
             - name: Run Docker Container
-              run: ./cpu/docker_run.sh
+              run: source cpu/docker_run.sh
