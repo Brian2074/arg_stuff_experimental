@@ -20,7 +20,6 @@ jobs:
                 PROJ_NAME="oop-python-nycu"
                 BASH_OPTION=bash
                 docker run \
-                  -it \
                   --rm \
                   -v "/home/$USER/$PROJ_NAME:/home/arg/$PROJ_NAME" \
                   -v "/etc/localtime:/etc/localtime:ro" \
