@@ -27,4 +27,6 @@ jobs:
 
             - name: Run Docker Container
               run: |
-                echo $(pwd)
+                chmod +x docker_run.sh
+                ./docker_run.sh
+              working-directory: $(pwd)/cpu
