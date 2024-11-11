@@ -26,4 +26,7 @@ jobs:
                 Xvfb :99 -screen 0 1024x768x16 &
 
             - name: Run Docker Container
-              run: source cpu/docker_run.sh
+              run: |
+                cd /cpu
+                chmod +x docker_run.sh
+                ./docker_run.sh
