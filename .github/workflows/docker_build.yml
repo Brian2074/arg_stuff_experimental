@@ -13,32 +13,16 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Check environment variables
-              run: |
-                echo $DISPLAY
-                env
-            
-            - name: Set up X11 environment
-              run: |
-                sudo apt-get update
-                sudo apt-get upgrade
-                sudo apt-get install -y xvfb xauth x11-xserver-utils
-                export DISPLAY=:99
-                Xvfb :99 -screen 0 1024x768x16 &
-                echo "export DISPLAY=$DISPLAY" >> $GITHUB_ENV
-
             - name: Run Docker Container
               run: |
+                ARGS=("$@")
+                USER_NAME="arg"
+                PROJ_NAME="oop-python-nycu"
                 BASH_OPTION=bash
                 docker run \
                   -it \
                   --rm \
-                  -e DISPLAY \
-                  -e QT_X11_NO_MITSHM=1 \
-                  -e XAUTHORITY=$XAUTH \
-                  -v "$XAUTH:$XAUTH" \
                   -v "/home/$USER/$PROJ_NAME:/home/arg/$PROJ_NAME" \
-                  -v "/tmp/.X11-unix:/tmp/.X11-unix" \
                   -v "/etc/localtime:/etc/localtime:ro" \
                   -v "/dev:/dev" \
                   -v "/var/run/docker.sock:/var/run/docker.sock" \
