@@ -29,8 +29,23 @@ jobs:
 
             - name: Run Docker Container
               run: |
-                chmod +x docker_run.sh
-                ./docker_run.sh
-              working-directory: ./cpu
-              env:
-                DISPLAY: ${{ env.DISPLAY }}
+                BASH_OPTION=bash
+                docker run \
+                  -it \
+                  --rm \
+                  -e DISPLAY \
+                  -e QT_X11_NO_MITSHM=1 \
+                  -e XAUTHORITY=$XAUTH \
+                  -v "$XAUTH:$XAUTH" \
+                  -v "/home/$USER/$PROJ_NAME:/home/arg/$PROJ_NAME" \
+                  -v "/tmp/.X11-unix:/tmp/.X11-unix" \
+                  -v "/etc/localtime:/etc/localtime:ro" \
+                  -v "/dev:/dev" \
+                  -v "/var/run/docker.sock:/var/run/docker.sock" \
+                  -w "/home/arg/$PROJ_NAME" \
+                  --user "root:root" \
+                  --network host \
+                  --privileged \
+                  --security-opt seccomp=unconfined \
+                  argnctu/oop:latest \
+                  $BASH_OPTION
