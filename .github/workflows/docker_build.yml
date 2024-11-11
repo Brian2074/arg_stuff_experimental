@@ -21,12 +21,16 @@ jobs:
             - name: Set up X11 environment
               run: |
                 sudo apt-get update
+                sudo apt-get upgrade
                 sudo apt-get install -y xvfb xauth x11-xserver-utils
                 export DISPLAY=:99
                 Xvfb :99 -screen 0 1024x768x16 &
+                echo "export DISPLAY=$DISPLAY" >> $GITHUB_ENV
 
             - name: Run Docker Container
               run: |
                 chmod +x docker_run.sh
                 ./docker_run.sh
               working-directory: ./cpu
+              env:
+                DISPLAY: ${{ env.DISPLAY }}
