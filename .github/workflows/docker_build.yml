@@ -1,4 +1,4 @@
-name: Run Docker Container
+name: Mention Test
 
 on:
   push:
@@ -6,29 +6,14 @@ on:
       - main
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  notify:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
-            - name: Run Docker Container
-              run: |
-                ARGS=("$@")
-                USER_NAME="arg"
-                PROJ_NAME="oop-python-nycu"
-                BASH_OPTION=bash
-                docker run \
-                  --rm \
-                  -v "/home/$USER/$PROJ_NAME:/home/arg/$PROJ_NAME" \
-                  -v "/etc/localtime:/etc/localtime:ro" \
-                  -v "/dev:/dev" \
-                  -v "/var/run/docker.sock:/var/run/docker.sock" \
-                  -w "/home/arg/$PROJ_NAME" \
-                  --user "root:root" \
-                  --network host \
-                  --privileged \
-                  --security-opt seccomp=unconfined \
-                  argnctu/oop:latest \
-                  $BASH_OPTION
+    steps:
+      - name: Comment on issue to notify user
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: 1  # 替換成你建立的測試用 Issue 編號
+          body: |
+            📢 測試通知  
+            @Brian2074 測試通知來囉～這是從 GitHub Actions 自動留言的喔！
