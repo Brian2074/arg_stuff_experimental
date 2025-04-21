@@ -5,6 +5,9 @@ on:
     - cron: '0 * * * *'  # 每小時更新
   workflow_dispatch:     # 手動觸發
 
+permissions:
+  contents: write  # 允許寫入內容
+
 jobs:
   update-readme:
     runs-on: ubuntu-latest
