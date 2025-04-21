@@ -1,19 +1,29 @@
-name: Mention Test
+name: Update README
 
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: '0 * * * *'  # 每小時更新
+  workflow_dispatch:     # 手動觸發
 
 jobs:
-  notify:
+  update-readme:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Comment on issue to notify user
-        uses: peter-evans/create-or-update-comment@v4
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
-          issue-number: 1  # 替換成你建立的測試用 Issue 編號
-          body: |
-            📢 測試通知  
-            @Brian2074 測試通知來囉～這是從 GitHub Actions 自動留言的喔！
+          python-version: '3.x'
+
+      - name: Run update script
+        run: |
+          python update_readme.py
+
+      - name: Commit changes
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add README.md
+          git commit -m "chore: update README" || echo "No changes to commit"
+          git push
