@@ -1,9 +1,9 @@
 name: Update README
 
 on:
-  schedule:
-    - cron: '0 * * * *'  # 每小時更新
-  workflow_dispatch:     # 手動觸發
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write  # 允許寫入內容
