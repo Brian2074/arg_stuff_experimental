@@ -1,32 +1,29 @@
-name: Update README
+name: Simple Matrix Output
 
 on:
   push:
     branches:
       - main
-
-permissions:
-  contents: write  # 允許寫入內容
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  update-readme:
+  output:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+        os: [ubuntu-latest, macos-latest]
+        include:
+          - node-version: 18.x
+            os: ubuntu-latest
+            experimental: true
+        exclude:
+          - node-version: 14.x
+            os: macos-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-
-      - name: Run update script
+      - name: Print configuration
         run: |
-          python update_readme.py
-
-      - name: Commit changes
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add README.md
-          git commit -m "chore: update README" || echo "No changes to commit"
-          git push
+          echo "Running on ${{ matrix.os }} with Node.js ${{ matrix.node-version }}"
+          echo "Experimental: ${{ matrix.experimental || false }}"
