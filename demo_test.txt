@@ -1,1 +1,1 @@
-this is a demo of github commit.
+this is a demo of github commit
