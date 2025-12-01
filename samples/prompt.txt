@@ -1,0 +1,13 @@
+Prompt: Create a small function using argparse that returns a dict of parsed args.
+
+Requirements:
+- Function name: `parse_args`
+- Use Python's `argparse` module
+- Provide a short docstring
+- Accept an optional `--count` integer argument with default `1`
+- Do not print to stdout; return a `dict` (use `vars(args)` or similar)
+
+Example usage (for human testing):
+# 1) Trigger Copilot with this prompt in a code file
+# 2) Copy the suggested code into `samples/suggestion.py`
+# 3) Run `pytest -q` to validate the suggestion
