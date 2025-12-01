@@ -15,6 +15,20 @@ This file provides repository-specific guidance for GitHub Copilot usage.
 - Use Copilot to generate function skeletons, unit tests, or README snippets.
 - Review and run all generated code locally before merging.
 
+### Example prompt and expected output
+```python
+# Prompt: "Create a small function using argparse that returns a dict of parsed args"
+def parse_args():
+	import argparse
+
+	parser = argparse.ArgumentParser()
+	parser.add_argument('--count', type=int, default=1)
+	args = parser.parse_args([])
+	return vars(args)
+
+# Expected: a simple, well-documented function that uses existing project style
+```
+
 ## Configuration
 - See .github/copilot.yml (if present) for repository-specific settings.
 
