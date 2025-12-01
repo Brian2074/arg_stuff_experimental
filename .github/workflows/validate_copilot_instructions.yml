@@ -1,0 +1,25 @@
+name: Validate Copilot Instructions
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    paths:
+      - '.github/copilot_instructions.md'
+      - '.github/**'
+
+jobs:
+  test-instructions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install test deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+      - name: Run pytest for copilot instructions
+        run: pytest -q
